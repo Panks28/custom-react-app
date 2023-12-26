@@ -8,7 +8,7 @@ const App = () => {
       <h2 id="heading">
         Welcome to Custom React App Build from Scratch using Babel and Webpack!
       </h2>
-      <img src="Images/pexels-cottonbro-studio-6153354.jpg"></img>{" "}
+      <img src="resource/image/pexels-cottonbro-studio-6153354.jpg"></img>{" "}
     </div>
   );
 };

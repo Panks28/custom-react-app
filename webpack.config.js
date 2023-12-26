@@ -1,63 +1,22 @@
 const path = require("path");
-
-/*We are basically telling webpack to take index.js from entry. Then check for all file extensions in resolve. 
-After that apply all the rules in module.rules and produce the output and place it in main.js in the public folder.*/
+const outDir = 'dist';
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  /** "mode"
-   * the environment - development, production, none. tells webpack
-   * to use its built-in optimizations accordingly. default is production
-   */
   mode: "development",
-  /** "entry"
-   * the entry point
-   */
   entry: "./index.js",
   output: {
-    /** "path"
-     * the folder path of the output file
-     */
-    path: path.resolve(__dirname, "public"),
-    /** "filename"
-     * the name of the output file
-     */
+    path: path.join(__dirname, outDir),
     filename: "main.js",
   },
-  /** "target"
-   * setting "node" as target app (server side), and setting it as "web" is
-   * for browser (client side). Default is "web"
-   */
   target: "web",
   devServer: {
-    /** "port"
-     * port of dev server
-     */
-    port: "3000",
-    /** "static"
-     * This property tells Webpack what static file it should serve
-     */
-    static: ["./public"],
-    /** "open"
-     * opens the browser after server is successfully started
-     */
-    open: true,
-    /** "hot"
-     * enabling and disabling HMR. takes "true", "false" and "only".
-     * "only" is used if enable Hot Module Replacement without page
-     * refresh as a fallback in case of build failures
-     */
+    port: "9000",
     hot: true,
-    /** "liveReload"
-     * disable live reload on the browser. "hot" must be set to false for this to work
-     */
     liveReload: true,
   },
   resolve: {
-    /** "extensions"
-     * If multiple files share the same name but have different extensions, webpack will
-     * resolve the one with the extension listed first in the array and skip the rest.
-     * This is what enables users to leave off the extension when importing
-     */
     extensions: [".js", ".jsx", ".json", ".ts"],
   },
   module: {
@@ -88,4 +47,10 @@ module.exports = {
       },
     ],
   },
+  plugins:[
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template:'./public/index.html'
+    })
+  ]
 };
