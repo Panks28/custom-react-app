@@ -1,20 +1,24 @@
 const path = require("path");
-const outDir = 'dist';
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const outDir = "dist";
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: "development",
-  entry: "./index.js",
+  entry: { home: "./index.js",
+  loginPage: "./src/Components/Login.js",
+  productsPage:"./src/Components/Products.js" 
+},
   output: {
     path: path.join(__dirname, outDir),
-    filename: "main.js",
+    filename: '[name].js'
   },
   target: "web",
   devServer: {
     port: "9000",
     hot: true,
     liveReload: true,
+    historyApiFallback: true,
   },
   resolve: {
     extensions: [".js", ".jsx", ".json", ".ts"],
@@ -42,15 +46,27 @@ module.exports = {
         loader: "file-loader",
         options: {
           /** Loading the image file to the specified directory. */
-          name: "resource/image/[name].[ext]",
+          name: "Images/[name].[ext]",
         },
       },
     ],
   },
-  plugins:[
+  plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template:'./public/index.html'
-    })
-  ]
+      title: 'Home',
+      template: './public/index.html',
+      filename:'index.html'
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Login',
+      template: './public/login.html',
+      filename:'./login.html'
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Products',
+      template: './public/products.html',
+      filename:'./products.html'
+    }),
+  ],
 };
